@@ -4,7 +4,7 @@ const morgan = require('morgan');
 const cors = require('cors');
 const bodyParser = require("body-parser");
 const router = require("./routes/api.route.js");
-const authSignupRouter = require("./routes/auth/signup.route.js");
+const authRouter = require("./routes/auth/auth.route.js");
 const connectDatabase = require("./utils/condb.js");
 
 const app = express();
@@ -13,7 +13,8 @@ app.use(bodyParser.json());
 app.use(cors({ origin: "*" }));
 app.use(morgan("dev"));
 app.use("/", router);
-app.use("/auth", authSignupRouter);
+// app.use("/auth", authSignupRouter);
+app.use("/auth", authRouter);
 
 app.all("*", (req, res) =>
 	res.status(404).json({
@@ -21,8 +22,6 @@ app.all("*", (req, res) =>
 		status: 404,
 	})
 );
-
-console.log(process.env.DATABASE_URI);
 
 connectDatabase(process.env.DATABASE_URI || "mongodb://localhost:27017");
 
