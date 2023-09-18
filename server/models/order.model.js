@@ -41,8 +41,8 @@ orderSchema.pre("save", function (next) {
 	if (this.items && this.items.length > 0) {
 		for (let i = 0; i < this.items.length; i++) {
 			const item = this.items[i];
-			if (item.itemPrice) {
-				totalPrice += Number.parseInt(item.itemPrice);
+			if (item.itemPrice && item.itemQnty > 0) {
+				totalPrice += Number.parseInt(item.itemPrice * item.itemQnty);
 			}
 		}
 	}
